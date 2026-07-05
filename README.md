@@ -130,9 +130,10 @@ so the Qdrant credential URL should remain `http://qdrant:6333`.
 1. Open <http://localhost:5678/> and complete the first-time n8n setup.
 2. The `localRAG` workflow is imported automatically on first startup when the
    n8n database is empty.
-3. Open the workflow at <http://localhost:5678/workflow/B69QT7wHIUKI48g1>.
-4. Create or select these n8n credentials if the imported workflow shows missing
-   credential warnings:
+3. Open the imported `localRAG` workflow from the n8n workflows list. The local
+   workflow ID can differ between n8n databases, so avoid relying on a hard-coded
+   workflow URL.
+4. Verify the imported n8n credentials match how you are running Ollama:
 
 | Credential | URL |
 | --- | --- |
@@ -140,8 +141,17 @@ so the Qdrant credential URL should remain `http://qdrant:6333`.
 | Ollama account, host Ollama on Mac | `http://host.docker.internal:11434` |
 | Qdrant account | `http://qdrant:6333` |
 
+The bundled credential export uses the host Ollama URL for Mac local
+development. If you run Ollama with the Docker `cpu`, `gpu-nvidia`, or `gpu-amd`
+profile, edit the imported `Ollama account` credential to use
+`http://ollama:11434`.
+
 The Docker Ollama profiles pull both required local models on startup:
 `llama3.2` and `nomic-embed-text`.
+
+If an Ollama or Qdrant node reports `fetch failed`, recheck these credential
+URLs. Inside the n8n container, `localhost` points to n8n itself, not to host
+Ollama or the Qdrant service.
 
 ## Quick start and usage
 
